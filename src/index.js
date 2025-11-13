@@ -1,7 +1,6 @@
 import express from "express"
 import cors from "cors"
 import mysql from "mysql2"
-import { persons } from "./persons.js"
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST } = process.env
 
@@ -12,11 +11,25 @@ app.use(cors())
 app.use(express.json())
 
 app.get("/", (request, response) => {
-    response.json(persons)
+    const selectCommand = `
+      SELECT name, email, age, nickname
+      FROM raulegas_02ta
+    `
+
+    database.query(selectCommand, (error, users) => {
+        if(error){
+            console.log(error)
+            return
+        }
+
+        console.log(users)
+
+        response.json(users)
+    })
 })
 
 app.post("/cadastrar", (request, response) => {
-    const { name, email, age, nickname, password } = request.body.user
+    const { name, email, age, nickname, password } = request.body.users
     //Cadastrar usuario no backend
     const insertCommand = `
     INSERT INTO raulegas_02ta(name, email, age, nickname, password)

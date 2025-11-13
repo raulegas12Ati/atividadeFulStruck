@@ -17,7 +17,7 @@ async function signUpEagle() {
         return
     }
 
-    const user = {
+    const users = {
         name,
         email,
         age,
@@ -25,7 +25,7 @@ async function signUpEagle() {
         password
     }
 
-    console.log(user)
+    console.log(users)
 
     //enviar o user para o backend
     const response = await fetch("http://localhost:3333/cadastrar", {
@@ -33,7 +33,7 @@ async function signUpEagle() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ user })
+        body: JSON.stringify({ users })
     }).then(response => response.json())
 
     const { message } = response
