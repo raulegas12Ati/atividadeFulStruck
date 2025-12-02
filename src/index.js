@@ -1,4 +1,4 @@
-import express from "express"
+import express, { response } from "express"
 import cors from "cors"
 import mysql from "mysql2"
 
@@ -17,7 +17,7 @@ app.get("/", (request, response) => {
     `
 
     database.query(selectCommand, (error, users) => {
-        if(error){
+        if (error) {
             console.log(error)
             return
         }
@@ -46,6 +46,33 @@ app.post("/cadastrar", (request, response) => {
     })
 
 
+})
+
+//rota para o login
+app.post("/login", (request, response) => {
+    const { email, password } = request.body.users
+    //Selecionar no banco de dados o usuario que tenha o email compativel
+    const selectCommand = "SELECT * FROM raulegas_02ta WHERE email = ?"
+
+    database.query(selectCommand, [email], (error, user) => {
+        if (error) {
+            console.log(error)
+            return
+        }
+
+        //user = array [{}]
+        //Tamanho do array = arrey.length
+        //Verificar se o usuario existe e se a senha esta incorreta
+        if (user.length === 0 || user[0].password !== password) {
+            response.json({ message: "Usuário ou senha incorretos!" })
+            return
+        }
+
+        response.json({
+            id: user[0].id,
+            name: user[0].name
+        })
+    })
 })
 
 app.listen(port, () => {

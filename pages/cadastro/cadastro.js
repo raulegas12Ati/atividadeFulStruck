@@ -40,5 +40,5 @@ async function signUpEagle() {
 
     alert(message)
 
-    window.location.href = "../front.html"
+    window.location.href = "../../front.html"
 }

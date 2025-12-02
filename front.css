@@ -28,16 +28,18 @@ ul {
     gap: 3rem;
 }
 
-a {
+a, button {
     color: #fff;
     background: oklch(59.6% 0.145 163.225);
     text-decoration: none;
     font-weight: 700;
     padding: 1rem;
     border-radius: .5rem;
+    border: none;
 }
 
-a:hover {
+a:hover, button:hover {
     background: oklch(76.5% 0.177 163.223);
     transition: .4s;
+    cursor: pointer;
 }
